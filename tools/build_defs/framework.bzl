@@ -250,11 +250,11 @@ def cc_external_rule_impl(ctx, attrs):
         attrs.create_configure_script(ConfigureParameters(ctx = ctx, attrs = attrs, inputs = inputs)),
         "\n".join(attrs.make_commands),
         attrs.postfix_script or "",
-        # replace references to the root directory when building ($BUILD_TMPDIR)
-        # and the root where the dependencies were installed ($EXT_BUILD_DEPS)
-        # for the results which are in $INSTALLDIR (with placeholder)
-        "##replace_absolute_paths## $$INSTALLDIR$$ $$BUILD_TMPDIR$$",
-        "##replace_absolute_paths## $$INSTALLDIR$$ $$EXT_BUILD_DEPS$$",
+        # # replace references to the root directory when building ($BUILD_TMPDIR)
+        # # and the root where the dependencies were installed ($EXT_BUILD_DEPS)
+        # # for the results which are in $INSTALLDIR (with placeholder)
+        # "##replace_absolute_paths## $$INSTALLDIR$$ $$BUILD_TMPDIR$$",
+        # "##replace_absolute_paths## $$INSTALLDIR$$ $$EXT_BUILD_DEPS$$",
         installdir_copy.script,
         empty.script,
         "cd $$EXT_BUILD_ROOT$$",
@@ -424,7 +424,7 @@ def _list(item):
 def _copy_deps_and_tools(files):
     lines = []
     lines += _symlink_contents_to_dir("lib", files.libs)
-    lines += _symlink_contents_to_dir("include", files.headers + files.include_dirs)
+    lines += _symlink_contents_to_dir("include", files.include_dirs)
 
     if files.tools_files:
         lines.append("##mkdirs## $$EXT_BUILD_DEPS$$/bin")
